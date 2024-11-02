@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef } from "react";
+import * as d3 from "d3";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const CPIViz = ({ data }) => {
+  const svgRef = useRef();
 
-export default App;
+  useEffect(() => {
+    const svg = d3.select(svgRef.current);
+    // Define graph drawing here using data for CPI and memory usage
+
+    // Sample: visualize CPI as nodes and edges
+    svg.selectAll("circle")
+      .data(data.cpiNodes)
+      .enter()
+      .append("circle")
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", 10)
+      .attr("fill", "blue");
+
+  }, [data]);
+
+  return <svg ref={svgRef} width={800} height={600}></svg>;
+};
+
+export default CPIViz;
